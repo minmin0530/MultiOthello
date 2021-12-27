@@ -10,8 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     private var labels: [SKLabelNode] = []
-    private var boards: [[SKShapeNode]] = [[]]
-    private var boardsColorNumber: [[Int]] = [[]]
+    private var boards: [[SKShapeNode]] = []
+    private var boardsColorNumber: [[Int]] = []
     private let COLORS: [UIColor] = [
         UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), // red
         UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0), // green
@@ -28,10 +28,10 @@ class GameScene: SKScene {
 
         let BOARD_SIZE: CGFloat = self.frame.width / 8
         let LINE_WIDTH: CGFloat = 4
-        for x in 0...7 {
+        for y in 0...7 {
             var row: [SKShapeNode] = []
             var boardsColorNumberRow: [Int] = []
-            for y in 0...7 {
+            for x in 0...7 {
                 let board: SKShapeNode = SKShapeNode(rect: CGRect(x: CGFloat(x) * BOARD_SIZE - self.frame.width / 2, y: CGFloat(y) * BOARD_SIZE - self.frame.width / 2, width: BOARD_SIZE, height: BOARD_SIZE))
                 board.fillColor = UIColor.init(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
                 board.strokeColor = .black
@@ -97,8 +97,87 @@ class GameScene: SKScene {
             var x = 0
             for board in boardRow {
                 if node == board {
+                    if boardsColorNumber[y][x] != -1 {
+                        break for_i
+                    }
                     board.fillColor = COLORS[turn]
                     boardsColorNumber[y][x] = turn
+
+                    for xx in 0...x {
+                        if boardsColorNumber[y][xx] == turn {
+                            for xxx in xx...x {
+                                boardsColorNumber[y][xxx] = turn
+                            }
+                            break
+                        }
+                    }
+                    if x < 7 {
+                        for xx in (x + 1)...7 {
+                            if boardsColorNumber[y][xx] == turn {
+                                for xxx in x...xx {
+                                    boardsColorNumber[y][xxx] = turn
+                                }
+                                break
+                            }
+                        }
+                    }
+
+                    for yy in 0...y {
+                        if boardsColorNumber[yy][x] == turn {
+                            for yyy in yy...y {
+                                boardsColorNumber[yyy][x] = turn
+                            }
+                            break
+                        }
+                    }
+                    if y < 7 {
+                        for yy in (y + 1)...7 {
+                            if boardsColorNumber[yy][x] == turn {
+                                for yyy in y...yy {
+                                    boardsColorNumber[yyy][x] = turn
+                                }
+                                break
+                            }
+                        }
+                    }
+
+                    for zz in 1...7 {
+                        if x + zz <= 7 && y + zz <= 7 && boardsColorNumber[y + zz][x + zz] == turn {
+                            for zzz in 0...zz {
+                                boardsColorNumber[y + zzz][x + zzz] = turn
+                            }
+                            break
+                        }
+                    }
+                    for zz in 1...7 {
+                        if x - zz >= 0 && y - zz >= 0 && boardsColorNumber[y - zz][x - zz] == turn {
+                            for zzz in 0...zz {
+                                boardsColorNumber[y - zzz][x - zzz] = turn
+                            }
+                            break
+                        }
+                    }
+
+                    for zz in 1...7 {
+                        if x + zz <= 7 && y - zz >= 0 && boardsColorNumber[y - zz][x + zz] == turn {
+                            for zzz in 0...zz {
+                                boardsColorNumber[y - zzz][x + zzz] = turn
+                            }
+                            break
+                        }
+                    }
+                    for zz in 1...7 {
+                        if x - zz >= 0 && y + zz <= 7 && boardsColorNumber[y + zz][x - zz] == turn {
+                            for zzz in 0...zz {
+                                boardsColorNumber[y + zzz][x - zzz] = turn
+                            }
+                            break
+                        }
+                    }
+
+
+
+
                     turn += 1
                     if turn > 7 {
                         turn = 0
@@ -109,6 +188,17 @@ class GameScene: SKScene {
             }
             y += 1
         }
+
+        for t in 0...7 {
+            for yy in 0...7 {
+                for xx in 0...7 {
+                    if boardsColorNumber[yy][xx] == t {
+                        boards[yy][xx].fillColor = COLORS[t]
+                    }
+                }
+            }
+        }
+
 
         for t in 0...7 {
             points[t] = 0

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84D329244399D3F28CD46823 /* Pods_MultiOthello.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3334C6A217E87FF28CA0121F /* Pods_MultiOthello.framework */; };
 		F452A19D2771F75700E77CBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F452A19C2771F75700E77CBD /* AppDelegate.swift */; };
 		F452A19F2771F75700E77CBD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F452A19E2771F75700E77CBD /* GameScene.sks */; };
 		F452A1A12771F75700E77CBD /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = F452A1A02771F75700E77CBD /* Actions.sks */; };
@@ -15,9 +16,12 @@
 		F452A1A82771F75700E77CBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F452A1A62771F75700E77CBD /* Main.storyboard */; };
 		F452A1AA2771F75900E77CBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F452A1A92771F75900E77CBD /* Assets.xcassets */; };
 		F452A1AD2771F75900E77CBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F452A1AB2771F75900E77CBD /* LaunchScreen.storyboard */; };
+		F4FC9318277AAACA001B9A36 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4FC9317277AAACA001B9A36 /* info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3334C6A217E87FF28CA0121F /* Pods_MultiOthello.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiOthello.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37E46CDD0924FD2359B62A52 /* Pods-MultiOthello.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiOthello.release.xcconfig"; path = "Target Support Files/Pods-MultiOthello/Pods-MultiOthello.release.xcconfig"; sourceTree = "<group>"; };
 		F452A1992771F75700E77CBD /* MultiOthello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiOthello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F452A19C2771F75700E77CBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F452A19E2771F75700E77CBD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -27,6 +31,8 @@
 		F452A1A72771F75700E77CBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F452A1A92771F75900E77CBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F452A1AC2771F75900E77CBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4FC9317277AAACA001B9A36 /* info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
+		F946CBDB79707CA3F461F749 /* Pods-MultiOthello.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiOthello.debug.xcconfig"; path = "Target Support Files/Pods-MultiOthello/Pods-MultiOthello.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,17 +40,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D329244399D3F28CD46823 /* Pods_MultiOthello.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70700498524CFB655F319DFA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F946CBDB79707CA3F461F749 /* Pods-MultiOthello.debug.xcconfig */,
+				37E46CDD0924FD2359B62A52 /* Pods-MultiOthello.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		81737B488AA611F309AF50F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3334C6A217E87FF28CA0121F /* Pods_MultiOthello.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F452A1902771F75700E77CBD = {
 			isa = PBXGroup;
 			children = (
 				F452A19B2771F75700E77CBD /* MultiOthello */,
 				F452A19A2771F75700E77CBD /* Products */,
+				70700498524CFB655F319DFA /* Pods */,
+				81737B488AA611F309AF50F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,6 +85,7 @@
 		F452A19B2771F75700E77CBD /* MultiOthello */ = {
 			isa = PBXGroup;
 			children = (
+				F4FC9317277AAACA001B9A36 /* info.plist */,
 				F452A19C2771F75700E77CBD /* AppDelegate.swift */,
 				F452A19E2771F75700E77CBD /* GameScene.sks */,
 				F452A1A02771F75700E77CBD /* Actions.sks */,
@@ -78,9 +105,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F452A1B02771F75900E77CBD /* Build configuration list for PBXNativeTarget "MultiOthello" */;
 			buildPhases = (
+				2AE18FBC7470AB348402FED0 /* [CP] Check Pods Manifest.lock */,
 				F452A1952771F75700E77CBD /* Sources */,
 				F452A1962771F75700E77CBD /* Frameworks */,
 				F452A1972771F75700E77CBD /* Resources */,
+				3EE8873F6A639F486E49CE5E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +160,7 @@
 			files = (
 				F452A1A82771F75700E77CBD /* Main.storyboard in Resources */,
 				F452A19F2771F75700E77CBD /* GameScene.sks in Resources */,
+				F4FC9318277AAACA001B9A36 /* info.plist in Resources */,
 				F452A1AA2771F75900E77CBD /* Assets.xcassets in Resources */,
 				F452A1AD2771F75900E77CBD /* LaunchScreen.storyboard in Resources */,
 				F452A1A12771F75700E77CBD /* Actions.sks in Resources */,
@@ -138,6 +168,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2AE18FBC7470AB348402FED0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MultiOthello-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EE8873F6A639F486E49CE5E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MultiOthello/Pods-MultiOthello-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MultiOthello/Pods-MultiOthello-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MultiOthello/Pods-MultiOthello-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F452A1952771F75700E77CBD /* Sources */ = {
@@ -290,6 +362,7 @@
 		};
 		F452A1B12771F75900E77CBD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F946CBDB79707CA3F461F749 /* Pods-MultiOthello.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -318,6 +391,7 @@
 		};
 		F452A1B22771F75900E77CBD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37E46CDD0924FD2359B62A52 /* Pods-MultiOthello.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

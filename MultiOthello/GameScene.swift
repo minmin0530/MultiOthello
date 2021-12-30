@@ -5,10 +5,25 @@
 //  Created by 泉芳樹 on 2021/12/21.
 //
 
+import SocketIO
 import SpriteKit
 import GameplayKit
 
+struct CustomData : SocketData {
+    let x: Int
+    let y: Int
+    let turn: Int
+    func socketRepresentation() -> SocketData {
+        return ["x": x, "y": y, "turn": turn]
+    }
+}
+
 class GameScene: SKScene {
+
+    private let manager = SocketManager(socketURL: URL(string:"https://multi-othello.com/")!, config: [.log(true), .compress])
+    private var socket : SocketIOClient!
+    private var dataList : NSArray! = []
+    private var putData : NSArray! = []
     private var labels: [SKLabelNode] = []
     private var boards: [[SKShapeNode]] = []
     private var boardsColorNumber: [[Int]] = []
@@ -54,6 +69,41 @@ class GameScene: SKScene {
             labels.append(label)
             addChild(label)
         }
+
+
+        socket = manager.defaultSocket
+
+        socket.on(clientEvent: .connect){ data, ack in
+            print("socket connected!")
+        }
+
+        socket.on(clientEvent: .disconnect){data, ack in
+            print("socket disconnected!")
+        }
+
+        socket.on("drag"){data, ack in
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                let json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments) as! NSArray
+                self.dataList = json[0] as? NSArray
+            } catch {
+                print("#####error")
+                return
+            }
+        }
+
+        socket.on("put"){data, ack in
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                let json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments) as! NSArray
+                self.putData = json as? NSArray
+            } catch {
+                print("#####error")
+                return
+            }
+        }
+
+        socket.connect()
 
     }
     
@@ -103,80 +153,9 @@ class GameScene: SKScene {
                     board.fillColor = COLORS[turn]
                     boardsColorNumber[y][x] = turn
 
-                    for xx in 0...x {
-                        if boardsColorNumber[y][xx] == turn {
-                            for xxx in xx...x {
-                                boardsColorNumber[y][xxx] = turn
-                            }
-                            break
-                        }
-                    }
-                    if x < 7 {
-                        for xx in (x + 1)...7 {
-                            if boardsColorNumber[y][xx] == turn {
-                                for xxx in x...xx {
-                                    boardsColorNumber[y][xxx] = turn
-                                }
-                                break
-                            }
-                        }
-                    }
 
-                    for yy in 0...y {
-                        if boardsColorNumber[yy][x] == turn {
-                            for yyy in yy...y {
-                                boardsColorNumber[yyy][x] = turn
-                            }
-                            break
-                        }
-                    }
-                    if y < 7 {
-                        for yy in (y + 1)...7 {
-                            if boardsColorNumber[yy][x] == turn {
-                                for yyy in y...yy {
-                                    boardsColorNumber[yyy][x] = turn
-                                }
-                                break
-                            }
-                        }
-                    }
-
-                    for zz in 1...7 {
-                        if x + zz <= 7 && y + zz <= 7 && boardsColorNumber[y + zz][x + zz] == turn {
-                            for zzz in 0...zz {
-                                boardsColorNumber[y + zzz][x + zzz] = turn
-                            }
-                            break
-                        }
-                    }
-                    for zz in 1...7 {
-                        if x - zz >= 0 && y - zz >= 0 && boardsColorNumber[y - zz][x - zz] == turn {
-                            for zzz in 0...zz {
-                                boardsColorNumber[y - zzz][x - zzz] = turn
-                            }
-                            break
-                        }
-                    }
-
-                    for zz in 1...7 {
-                        if x + zz <= 7 && y - zz >= 0 && boardsColorNumber[y - zz][x + zz] == turn {
-                            for zzz in 0...zz {
-                                boardsColorNumber[y - zzz][x + zzz] = turn
-                            }
-                            break
-                        }
-                    }
-                    for zz in 1...7 {
-                        if x - zz >= 0 && y + zz <= 7 && boardsColorNumber[y + zz][x - zz] == turn {
-                            for zzz in 0...zz {
-                                boardsColorNumber[y + zzz][x - zzz] = turn
-                            }
-                            break
-                        }
-                    }
-
-
-
+                    socket.emit("put", CustomData(x: x, y: y, turn: turn))
+                    reversi(x: x, y: y, turn: turn)
 
                     turn += 1
                     if turn > 7 {
@@ -189,17 +168,11 @@ class GameScene: SKScene {
             y += 1
         }
 
-        for t in 0...7 {
-            for yy in 0...7 {
-                for xx in 0...7 {
-                    if boardsColorNumber[yy][xx] == t {
-                        boards[yy][xx].fillColor = COLORS[t]
-                    }
-                }
-            }
-        }
+        fillColorBoards()
+        pointsLabel()
+    }
 
-
+    func pointsLabel() {
         for t in 0...7 {
             points[t] = 0
             for boardRow2 in boardsColorNumber {
@@ -211,10 +184,96 @@ class GameScene: SKScene {
             }
             labels[t].text = "●" + String(points[t])
         }
+    }
+    func fillColorBoards() {
+        for t in 0...7 {
+            for yy in 0...7 {
+                for xx in 0...7 {
+                    if boardsColorNumber[yy][xx] == t {
+                        boards[yy][xx].fillColor = COLORS[t]
+                    }
+                }
+            }
+        }
+    }
 
+    func reversi(x: Int, y: Int, turn: Int) {
+
+        for xx in 0...x {
+            if boardsColorNumber[y][xx] == turn {
+                for xxx in xx...x {
+                    boardsColorNumber[y][xxx] = turn
+                }
+                break
+            }
+        }
+        if x < 7 {
+            for xx in (x + 1)...7 {
+                if boardsColorNumber[y][xx] == turn {
+                    for xxx in x...xx {
+                        boardsColorNumber[y][xxx] = turn
+                    }
+                    break
+                }
+            }
+        }
+
+        for yy in 0...y {
+            if boardsColorNumber[yy][x] == turn {
+                for yyy in yy...y {
+                    boardsColorNumber[yyy][x] = turn
+                }
+                break
+            }
+        }
+        if y < 7 {
+            for yy in (y + 1)...7 {
+                if boardsColorNumber[yy][x] == turn {
+                    for yyy in y...yy {
+                        boardsColorNumber[yyy][x] = turn
+                    }
+                    break
+                }
+            }
+        }
+
+        for zz in 1...7 {
+            if x + zz <= 7 && y + zz <= 7 && boardsColorNumber[y + zz][x + zz] == turn {
+                for zzz in 0...zz {
+                    boardsColorNumber[y + zzz][x + zzz] = turn
+                }
+                break
+            }
+        }
+        for zz in 1...7 {
+            if x - zz >= 0 && y - zz >= 0 && boardsColorNumber[y - zz][x - zz] == turn {
+                for zzz in 0...zz {
+                    boardsColorNumber[y - zzz][x - zzz] = turn
+                }
+                break
+            }
+        }
+
+        for zz in 1...7 {
+            if x + zz <= 7 && y - zz >= 0 && boardsColorNumber[y - zz][x + zz] == turn {
+                for zzz in 0...zz {
+                    boardsColorNumber[y - zzz][x + zzz] = turn
+                }
+                break
+            }
+        }
+        for zz in 1...7 {
+            if x - zz >= 0 && y + zz <= 7 && boardsColorNumber[y + zz][x - zz] == turn {
+                for zzz in 0...zz {
+                    boardsColorNumber[y + zzz][x - zzz] = turn
+                }
+                break
+            }
+        }
 
     }
-    
+
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
@@ -230,5 +289,41 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        labels[0].text = "@@@@@"
+        var i = 0
+        for doc in dataList {
+            if ( (doc as! NSDictionary)["x"] as! Double) > 0 {
+                for t in 0...7 {
+                    labels[t].text = "●Success!!"
+                }
+
+            }
+//            ( (doc as! NSDictionary)["y"] as! Double)
+//            squres[i].fillColor = UIColor.init(
+//                red: (doc as! NSDictionary)["r"] as! CGFloat / 255.0,
+//                green: (doc as! NSDictionary)["g"] as! CGFloat / 255.0,
+//                blue: (doc as! NSDictionary)["b"] as! CGFloat / 255.0,
+//                alpha: 1.0)
+            i += 1
+        }
+
+        guard let putData = putData else { return }
+        for doc in putData {
+            let x: Int = ( (doc as! NSDictionary)["x"] as! Int)
+            let y: Int = ( (doc as! NSDictionary)["y"] as! Int)
+            let t: Int = ( (doc as! NSDictionary)["turn"] as! Int)
+            boards[y][x].fillColor = COLORS[t]
+            boardsColorNumber[y][x] = t
+            reversi(x: x, y: y, turn: t)
+
+            turn = t + 1
+            if turn > 7 {
+                turn = 0
+            }
+            fillColorBoards()
+            pointsLabel()
+        }
+
+
     }
 }

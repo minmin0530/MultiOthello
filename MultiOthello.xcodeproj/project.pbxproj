@@ -19,6 +19,10 @@
 		F4FC9318277AAACA001B9A36 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4FC9317277AAACA001B9A36 /* info.plist */; };
 		F4FC931E277E7DBF001B9A36 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC931D277E7DBF001B9A36 /* TabBarController.swift */; };
 		F4FC9320277E7E31001B9A36 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC931F277E7E31001B9A36 /* TopViewController.swift */; };
+		F4FC932227828AF0001B9A36 /* CreateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC932127828AF0001B9A36 /* CreateTableViewController.swift */; };
+		F4FC9324278294D6001B9A36 /* ServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC9323278294D6001B9A36 /* ServerRequest.swift */; };
+		F4FC93262782A187001B9A36 /* TableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC93252782A187001B9A36 /* TableListViewController.swift */; };
+		F4FC93282782A2F7001B9A36 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FC93272782A2F7001B9A36 /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		F4FC9317277AAACA001B9A36 /* info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		F4FC931D277E7DBF001B9A36 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F4FC931F277E7E31001B9A36 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		F4FC932127828AF0001B9A36 /* CreateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTableViewController.swift; sourceTree = "<group>"; };
+		F4FC9323278294D6001B9A36 /* ServerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerRequest.swift; sourceTree = "<group>"; };
+		F4FC93252782A187001B9A36 /* TableListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableListViewController.swift; sourceTree = "<group>"; };
+		F4FC93272782A2F7001B9A36 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		F946CBDB79707CA3F461F749 /* Pods-MultiOthello.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiOthello.debug.xcconfig"; path = "Target Support Files/Pods-MultiOthello/Pods-MultiOthello.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +108,10 @@
 				F452A1AB2771F75900E77CBD /* LaunchScreen.storyboard */,
 				F4FC931D277E7DBF001B9A36 /* TabBarController.swift */,
 				F4FC931F277E7E31001B9A36 /* TopViewController.swift */,
+				F4FC932127828AF0001B9A36 /* CreateTableViewController.swift */,
+				F4FC9323278294D6001B9A36 /* ServerRequest.swift */,
+				F4FC93252782A187001B9A36 /* TableListViewController.swift */,
+				F4FC93272782A2F7001B9A36 /* TableViewCell.swift */,
 			);
 			path = MultiOthello;
 			sourceTree = "<group>";
@@ -223,6 +235,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F452A1A32771F75700E77CBD /* GameScene.swift in Sources */,
+				F4FC932227828AF0001B9A36 /* CreateTableViewController.swift in Sources */,
+				F4FC9324278294D6001B9A36 /* ServerRequest.swift in Sources */,
+				F4FC93282782A2F7001B9A36 /* TableViewCell.swift in Sources */,
+				F4FC93262782A187001B9A36 /* TableListViewController.swift in Sources */,
 				F4FC931E277E7DBF001B9A36 /* TabBarController.swift in Sources */,
 				F452A1A52771F75700E77CBD /* GameViewController.swift in Sources */,
 				F452A19D2771F75700E77CBD /* AppDelegate.swift in Sources */,

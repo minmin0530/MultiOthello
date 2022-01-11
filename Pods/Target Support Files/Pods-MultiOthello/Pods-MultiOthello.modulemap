@@ -1,6 +1,0 @@
-framework module Pods_MultiOthello {
-  umbrella header "Pods-MultiOthello-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,20 +1,30 @@
 PODS:
+  - Realm (10.15.1):
+    - Realm/Headers (= 10.15.1)
+  - Realm/Headers (10.15.1)
+  - RealmSwift (10.15.1):
+    - Realm (= 10.15.1)
   - Socket.IO-Client-Swift (15.2.0):
     - Starscream (~> 3.1)
   - Starscream (3.1.1)
 
 DEPENDENCIES:
+  - RealmSwift
   - Socket.IO-Client-Swift (~> 15.2.0)
 
 SPEC REPOS:
   trunk:
+    - Realm
+    - RealmSwift
     - Socket.IO-Client-Swift
     - Starscream
 
 SPEC CHECKSUMS:
+  Realm: fbcbde2620d51623cc5b18e28f5b165c39abef52
+  RealmSwift: e4bea8e42efad3d543aea23b56504069c6faaea2
   Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 
-PODFILE CHECKSUM: eab2565675977357abca0e318f095d3fed125dbe
+PODFILE CHECKSUM: 2fd8b86d51a1517d530aa6e491cb86e2bdc007b5
 
 COCOAPODS: 1.11.2

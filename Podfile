@@ -7,4 +7,5 @@ target 'MultiOthello' do
 
   # Pods for MultiOthello
   pod 'Socket.IO-Client-Swift', '~> 15.2.0'
+  pod 'RealmSwift'
 end

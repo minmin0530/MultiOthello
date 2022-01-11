@@ -21,9 +21,19 @@ class TableListViewController: UIViewController, UITableViewDataSource, UITableV
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(onRefresh(_:)), for: .valueChanged)
 
         getTableList()
     }
+
+    @objc private func onRefresh(_ sender: AnyObject) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.getTableList()
+            self?.tableView.refreshControl?.endRefreshing()
+        }
+    }
+
     func tableViewReload(data: Data?) {
         do {
             let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)

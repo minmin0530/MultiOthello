@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet weak private var pickerView: UIPickerView!
@@ -17,6 +18,13 @@ class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
         pickerView.dataSource = self
         pickerView.delegate = self
+
+        let realm = try! Realm()
+        let account: Results<Account> = realm.objects(Account.self)
+        print(account[0].userid)
+        print(account[0].name)
+        print(account[0].password)
+
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -44,10 +52,10 @@ class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
     func sceneChange(data: Data) {
         DispatchQueue.main.async {
-            let UINavigationController = self.tabBarController?.viewControllers?[1];
+            let UINavigationController = self.tabBarController?.viewControllers?[1]
             let tableListView = self.tabBarController?.viewControllers?[1] as! TableListViewController
             tableListView.getTableList()
-            self.tabBarController?.selectedViewController = UINavigationController;
+            self.tabBarController?.selectedViewController = UINavigationController
         }
     }
 }

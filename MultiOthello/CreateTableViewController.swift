@@ -11,6 +11,7 @@ import RealmSwift
 class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet weak private var pickerView: UIPickerView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var tableNameTextField: UITextField!
     private var maxNumber: Int = 3
     private let dataList = [ "3", "4", "5", "6", "7" ]
     override func viewDidLoad() {
@@ -18,13 +19,6 @@ class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
         pickerView.dataSource = self
         pickerView.delegate = self
-
-        let realm = try! Realm()
-        let account: Results<Account> = realm.objects(Account.self)
-        print(account[0].userid)
-        print(account[0].name)
-        print(account[0].password)
-
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -40,12 +34,18 @@ class CreateTableViewController: UIViewController, UIPickerViewDelegate, UIPicke
         maxNumber = row + 3
     }
     @IBAction func createTableButtonTapped(_ sender: Any) {
+        let realm = try! Realm()
+        let account: Results<Account> = realm.objects(Account.self)
+
         let serverRequest: ServerRequest = ServerRequest()
         serverRequest.sendServerRequest(
             urlString: "https://multi-othello.com/createTable",
             params: [
                 "datetime": self.datePicker.date.toStringWithCurrentLocale(),
-                "maxnumber": self.maxNumber
+                "maxnumber": self.maxNumber,
+                "tablename": self.tableNameTextField.text!,
+                "ownerid": account[0].userid,
+                "ownername": account[0].name
             ],
             completion: self.sceneChange(data:))
     }

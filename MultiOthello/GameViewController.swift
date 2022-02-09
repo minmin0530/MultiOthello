@@ -11,14 +11,18 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    var tableID: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = GameScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
+                scene.configure(tableID: self.tableID!)
+
                 
                 // Present the scene
                 view.presentScene(scene)
@@ -29,6 +33,10 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+    }
+
+    func configure(tableID: String) {
+        self.tableID = tableID
     }
 
     override var shouldAutorotate: Bool {

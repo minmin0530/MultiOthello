@@ -8,8 +8,10 @@
 import UIKit
 
 class Table {
+    var id: String = ""
     var dateTime: String = ""
     var maxNumber: Int = 0
+    var tableName: String = ""
 }
 
 class TableListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -42,8 +44,14 @@ class TableListViewController: UIViewController, UITableViewDataSource, UITableV
                 self.tableList = []
                 for doc in docs {
                     let table = Table()
+                    table.id = (doc as! NSDictionary)["_id"] as! String
                     table.dateTime = (doc as! NSDictionary)["datetime"] as! String
                     table.maxNumber = (doc as! NSDictionary)["maxnumber"] as! Int
+                    if (doc as! NSDictionary)["tablename"] == nil {
+                        table.tableName = ""
+                    } else {
+                        table.tableName = (doc as! NSDictionary)["tablename"] as! String
+                    }
                     self.tableList.append(table)
                 }
             }
@@ -74,10 +82,13 @@ extension TableListViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableView", for: indexPath) as! TableViewCell
         // カスタムセルにRealmの情報を反映
-        cell.configure(dateTime: tableList[indexPath.row].dateTime, maxNumber: tableList[indexPath.row].maxNumber)
+        cell.configure(dateTime: tableList[indexPath.row].dateTime, maxNumber: tableList[indexPath.row].maxNumber, tableName: tableList[indexPath.row].tableName, id: tableList[indexPath.row].id)
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120.0
+    }
 //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
 //                   forRowAt indexPath: IndexPath) {
 ////        deleteTodoItem(at: indexPath.row)

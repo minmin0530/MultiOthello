@@ -17,6 +17,7 @@
 		F452A1A82771F75700E77CBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F452A1A62771F75700E77CBD /* Main.storyboard */; };
 		F452A1AA2771F75900E77CBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F452A1A92771F75900E77CBD /* Assets.xcassets */; };
 		F452A1AD2771F75900E77CBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F452A1AB2771F75900E77CBD /* LaunchScreen.storyboard */; };
+		F45EEBA5278DC3DD00757F32 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EEBA4278DC3DD00757F32 /* UIView+.swift */; };
 		F4B036EF278BD98600DD28B8 /* LoginNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B036EE278BD98600DD28B8 /* LoginNameViewController.swift */; };
 		F4B036F1278BDAEA00DD28B8 /* LoginPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B036F0278BDAEA00DD28B8 /* LoginPasswordViewController.swift */; };
 		F4FC9318277AAACA001B9A36 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4FC9317277AAACA001B9A36 /* info.plist */; };
@@ -41,6 +42,7 @@
 		F452A1A72771F75700E77CBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F452A1A92771F75900E77CBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F452A1AC2771F75900E77CBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F45EEBA4278DC3DD00757F32 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		F4B036EE278BD98600DD28B8 /* LoginNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNameViewController.swift; sourceTree = "<group>"; };
 		F4B036F0278BDAEA00DD28B8 /* LoginPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasswordViewController.swift; sourceTree = "<group>"; };
 		F4FC9317277AAACA001B9A36 /* info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				F4B036EE278BD98600DD28B8 /* LoginNameViewController.swift */,
 				F4B036F0278BDAEA00DD28B8 /* LoginPasswordViewController.swift */,
 				F42405E7278D12250018F4BD /* Account.swift */,
+				F45EEBA4278DC3DD00757F32 /* UIView+.swift */,
 			);
 			path = MultiOthello;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				F4FC93262782A187001B9A36 /* TableListViewController.swift in Sources */,
 				F4FC931E277E7DBF001B9A36 /* TabBarController.swift in Sources */,
 				F452A1A52771F75700E77CBD /* GameViewController.swift in Sources */,
+				F45EEBA5278DC3DD00757F32 /* UIView+.swift in Sources */,
 				F452A19D2771F75700E77CBD /* AppDelegate.swift in Sources */,
 				F4FC9320277E7E31001B9A36 /* TopViewController.swift in Sources */,
 			);

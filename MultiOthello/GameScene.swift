@@ -302,7 +302,7 @@ class GameScene: SKScene {
         let turn = t % playerMaxNumber!
         for yy in 0...7 {
             for xx in 2...7 {
-                if boardsColorNumber[yy][xx] == turn && xx < 7 {
+                if boardsColorNumber[yy][xx] == turn {
                     var xxxx = 0
                     for xxx in 1...xx {
                         if boardsColorNumber[yy][xx - xxx] != EMPTY_AREA &&
@@ -340,7 +340,7 @@ class GameScene: SKScene {
         }
         for xx in 0...7 {
             for yy in 2...7 {
-                if boardsColorNumber[yy][xx] == turn && yy < 7 {
+                if boardsColorNumber[yy][xx] == turn {
                     var yyyy = 0
                     for yyy in 1...yy {
                         if boardsColorNumber[yy - yyy][xx] != EMPTY_AREA &&
@@ -379,10 +379,9 @@ class GameScene: SKScene {
         for xx in 0...7 {
             for yy in 0...7 {
 
-                for zz in 2...7 {
                     if boardsColorNumber[yy][xx] == turn {
                         var zzzz = 0
-                        for zzz in 1...zz {
+                        for zzz in 1...7 {
                             if yy >= zzz && xx >= zzz &&
                                boardsColorNumber[yy - zzz][xx - zzz] != EMPTY_AREA &&
                                boardsColorNumber[yy - zzz][xx - zzz] != turn &&
@@ -392,18 +391,19 @@ class GameScene: SKScene {
                                 break
                             }
                         }
-                        if zzzz >= 1 && zzzz < zz && boardsColorNumber[yy - zzzz - 1][xx - zzzz - 1] == EMPTY_AREA {
+                        if zzzz >= 1 && yy > zzzz && xx > zzzz && boardsColorNumber[yy - zzzz - 1][xx - zzzz - 1] == EMPTY_AREA {
                             boardsColorNumber[yy - zzzz - 1][xx - zzzz - 1] = PUTTABLE_AREA
-                            break
+//                            break
                         }
                     }
-                }
+            }
+        }
+        for xx in 0...7 {
+            for yy in 0...7 {
 
-
-                for zz in 0...5 {
                     if boardsColorNumber[yy][xx] == turn {
                         var zzzz = 0
-                        for zzz in (zz + 1)...6 {
+                        for zzz in 1...6 {
                             if yy + zzz <= 7 && xx + zzz <= 7 &&
                                boardsColorNumber[yy + zzz][xx + zzz] != EMPTY_AREA &&
                                boardsColorNumber[yy + zzz][xx + zzz] != turn &&
@@ -413,21 +413,26 @@ class GameScene: SKScene {
                                 break
                             }
                         }
-                        if zzzz >= 1 && boardsColorNumber[yy + zzzz + 1][xx + zzzz + 1] == EMPTY_AREA {
+                        if zzzz >= 1 && yy + zzzz < 7 && xx + zzzz < 7 && boardsColorNumber[yy + zzzz + 1][xx + zzzz + 1] == EMPTY_AREA {
                             boardsColorNumber[yy + zzzz + 1][xx + zzzz + 1] = PUTTABLE_AREA
-                            break
+//                            break
                         }
                     }
-                }
+            }
+        }
+        for xx in 0...7 {
+            for yy in 0...7 {
 
                 if boardsColorNumber[yy][xx] == turn {
                     var zzzz = 0
-                    for zzz in 0...7 {
+                    for zzz in 1...6 {
                         if yy + zzz <= 7 && xx >= zzz &&
                            boardsColorNumber[yy + zzz][xx - zzz] != EMPTY_AREA &&
                            boardsColorNumber[yy + zzz][xx - zzz] != turn &&
                            boardsColorNumber[yy + zzz][xx - zzz] != PUTTABLE_AREA {
                             zzzz = zzz
+                        } else {
+                            break
                         }
                     }
                     if zzzz >= 1 && yy + zzzz < 7 && xx > zzzz && boardsColorNumber[yy + zzzz + 1][xx - zzzz - 1] == EMPTY_AREA {
@@ -435,15 +440,21 @@ class GameScene: SKScene {
 //                            break
                     }
                 }
+            }
+        }
+        for xx in 0...7 {
+            for yy in 0...7 {
 
                 if boardsColorNumber[yy][xx] == turn {
                     var zzzz = 0
-                    for zzz in 0...7 {
+                    for zzz in 1...6 {
                         if xx + zzz <= 7 && yy >= zzz &&
                            boardsColorNumber[yy - zzz][xx + zzz] != EMPTY_AREA &&
                            boardsColorNumber[yy - zzz][xx + zzz] != turn &&
                            boardsColorNumber[yy - zzz][xx + zzz] != PUTTABLE_AREA {
                             zzzz = zzz
+                        } else {
+                            break
                         }
                     }
                     if zzzz >= 1 && xx + zzzz < 7 && yy > zzzz && boardsColorNumber[yy - zzzz - 1][xx + zzzz + 1] == EMPTY_AREA {
@@ -451,7 +462,6 @@ class GameScene: SKScene {
 //                            break
                     }
                 }
-
             }
         }
     }

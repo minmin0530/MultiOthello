@@ -9,6 +9,7 @@ import SocketIO
 import SpriteKit
 import GameplayKit
 import RealmSwift
+import SwiftUI
 
 enum PuttablePieceResult {
     case pass
@@ -39,6 +40,12 @@ struct GameStartData : SocketData {
         return ["tableid": tableid]
     }
 }
+struct GameFinishData : SocketData {
+    let tableid: String
+    func socketRepresentation() -> SocketData {
+        return ["tableid": tableid]
+    }
+}
 class GameScene: SKScene {
     private let EMPTY_AREA = -1
     private let PUTTABLE_AREA = 777
@@ -52,10 +59,13 @@ class GameScene: SKScene {
     private var putData : NSArray! = []
     private var joinData : NSArray! = []
     private var gameStartData : NSArray! = []
+    private var isGameFinish: Bool = false
     private var isGameStart: Bool = false
     private var isGameButtonActive: Bool = false
     private var waitGameButton: SKSpriteNode = SKSpriteNode(imageNamed: "waitGame")
     private var gameStartButton: SKSpriteNode = SKSpriteNode(imageNamed: "gameStart")
+    private var gameFinishButton: SKSpriteNode = SKSpriteNode(imageNamed: "gameFinish")
+    private var passTurnButton: SKSpriteNode = SKSpriteNode(imageNamed: "pass")
     private var labels: [SKLabelNode] = []
     private var boards: [[SKShapeNode]] = []
     private var boardsColorNumber: [[Int]] = []
@@ -193,7 +203,7 @@ class GameScene: SKScene {
 //            self.addChild(n)
 //        }
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
@@ -201,6 +211,43 @@ class GameScene: SKScene {
         
 //        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
         let location = touches.first!.location(in: self)
+
+        if atPoint(location) == gameFinishButton {
+            gameFinishButton.isHidden = true
+            socket.emit("gameFinish", GameFinishData(tableid: self.tableID!))
+//            self.view!.window!.rootViewController?.performSegue(withIdentifier: "presentSecond", sender: nil)
+//            DispatchQueue.main.async {
+            let parentVC = self.view!.parentViewController() as! GameViewController
+            let nextVC = parentVC.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+
+            let tableListView = nextVC.viewControllers?[1] as! TableListViewController
+            tableListView.getTableList()
+            nextVC.selectedViewController = tableListView
+            nextVC.modalPresentationStyle = .fullScreen
+            parentVC.present(nextVC, animated: true, completion: {
+                self.socket.emit("disconnect")
+                self.view?.presentScene(nil)
+            } )
+
+//
+//
+//            nextVC.modalPresentationStyle = .fullScreen
+//            nextVC.configure(tableID: id!)
+//            parentVC.present(nextVC, animated: true, completion: nil)
+//
+//                if let theViewController = self.viewController { // Optional Bindingを採用。
+//                    theViewController.performSegue(withIdentifier: "TabBarController", sender: self)
+//                } else {
+//                    print("Property viewController is nil") // viewControllerに、なにも代入されていなかったら、こちらが実行。
+//                }
+//                let UINavigationController = self.view!.window!.rootViewController?.tabBarController!.viewControllers?[1]
+//                let tableListView = self.view!.window!.rootViewController?.tabBarController!.viewControllers?[1] as! TableListViewController
+//                tableListView.getTableList()
+//                self.view!.window!.rootViewController?.tabBarController!.selectedViewController = UINavigationController
+//            }
+
+            return
+        }
 
         if atPoint(location) == gameStartButton {
             isGameStart = true
@@ -694,6 +741,10 @@ class GameScene: SKScene {
             let x: Int = ( (doc as! NSDictionary)["x"] as! Int)
             let y: Int = ( (doc as! NSDictionary)["y"] as! Int)
             let t: Int = ( (doc as! NSDictionary)["turn"] as! Int)
+            if t >= 63 && isGameFinish == false {
+                isGameFinish = true
+                addChild(gameFinishButton)
+            }
             boards[y][x].fillColor = COLORS[t % playerMaxNumber!]
             boardsColorNumber[y][x] = t % playerMaxNumber!
             reversi(x: x, y: y, t: t)

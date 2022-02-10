@@ -11,7 +11,7 @@
         <!--Item 2-->
         <scene sceneID="ykG-oJ-oov">
             <objects>
-                <viewController id="6K9-lc-3Ub" customClass="TableListViewController" customModule="MultiOthello" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6K9-lc-3Ub" customClass="TableListViewController" customModule="MultiOthello" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aug-zK-rXP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

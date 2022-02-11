@@ -82,8 +82,10 @@ class GameScene: SKScene {
     ]
     private var turn: Int = 0
     private var points: [Int] = []
-    func configure(tableID: String) {
+    private var gameClosure: (() -> Void)?
+    func configure(tableID: String, closure: @escaping (() -> Void) ) {
         self.tableID = tableID
+        gameClosure = closure
     }
     override func didMove(to view: SKView) {
 
@@ -217,17 +219,20 @@ class GameScene: SKScene {
             socket.emit("gameFinish", GameFinishData(tableid: self.tableID!))
 //            self.view!.window!.rootViewController?.performSegue(withIdentifier: "presentSecond", sender: nil)
 //            DispatchQueue.main.async {
-            let parentVC = self.view!.parentViewController() as! GameViewController
-            let nextVC = parentVC.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+            self.socket.emit("disconnect")
 
-            let tableListView = nextVC.viewControllers?[1] as! TableListViewController
-            tableListView.getTableList()
-            nextVC.selectedViewController = tableListView
-            nextVC.modalPresentationStyle = .fullScreen
-            parentVC.present(nextVC, animated: true, completion: {
-                self.socket.emit("disconnect")
-                self.view?.presentScene(nil)
-            } )
+            gameClosure!()
+//            let parentVC = self.view!.parentViewController() as! GameViewController
+//            let nextVC = parentVC.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+//
+//            let tableListView = nextVC.viewControllers?[1] as! TableListViewController
+//            tableListView.getTableList()
+//            nextVC.selectedViewController = tableListView
+//            nextVC.modalPresentationStyle = .fullScreen
+//            parentVC.present(nextVC, animated: true, completion: {
+//                self.socket.emit("disconnect")
+//                self.view?.presentScene(nil)
+//            } )
 
 //
 //

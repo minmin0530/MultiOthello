@@ -21,9 +21,16 @@ class GameViewController: UIViewController {
             if let scene = GameScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
-                scene.configure(tableID: self.tableID!)
-
-                
+                scene.configure(tableID: self.tableID!, closure: {
+                    let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+                    let tableListView = nextVC.viewControllers?[1] as! TableListViewController
+                    tableListView.getTableList()
+                    nextVC.selectedViewController = tableListView
+                    nextVC.modalPresentationStyle = .fullScreen
+                    self.present(nextVC, animated: true, completion: {
+                        view.presentScene(nil)
+                    })
+                })
                 // Present the scene
                 view.presentScene(scene)
             }

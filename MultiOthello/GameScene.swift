@@ -59,6 +59,7 @@ class GameScene: SKScene {
     private var putData : NSArray! = []
     private var joinData : NSArray! = []
     private var gameStartData : NSArray! = []
+    private var isPassTurn: Bool = false
     private var isGameFinish: Bool = false
     private var isGameStart: Bool = false
     private var isGameButtonActive: Bool = false
@@ -69,6 +70,7 @@ class GameScene: SKScene {
     private var labels: [SKLabelNode] = []
     private var boards: [[SKShapeNode]] = []
     private var boardsColorNumber: [[Int]] = []
+    private var boardsCount: Int = 0
     private let COLORS: [UIColor] = [
         UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), // red
         UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0), // green
@@ -117,6 +119,8 @@ class GameScene: SKScene {
             labels.append(label)
             addChild(label)
         }
+        passTurnButton.isHidden = true
+        addChild(passTurnButton)
 
 
         socket = manager.defaultSocket
@@ -750,23 +754,50 @@ class GameScene: SKScene {
                 isGameFinish = true
                 addChild(gameFinishButton)
             }
-            boards[y][x].fillColor = COLORS[t % playerMaxNumber!]
-            boardsColorNumber[y][x] = t % playerMaxNumber!
-            reversi(x: x, y: y, t: t)
-            turn = t + 1
-            fillColorBoards()
-            pointsLabel()
+            if (x == -1 && y == -1) == false {
 
-            if (turn % playerMaxNumber!) == myTurn && turn >= playerMaxNumber! * 2 {
-                whereCanIPutAPiece(t: turn)
-                for yy in 0...7 {
-                    for xx in 0...7 {
-                        if boardsColorNumber[yy][xx] == PUTTABLE_AREA {
-                            boards[yy][xx].fillColor = COLORS[8]
+                boards[y][x].fillColor = COLORS[t % playerMaxNumber!]
+                boardsColorNumber[y][x] = t % playerMaxNumber!
+                reversi(x: x, y: y, t: t)
+                turn = t + 1
+                fillColorBoards()
+                pointsLabel()
+
+                if (turn % playerMaxNumber!) == myTurn && turn >= playerMaxNumber! * 2 {
+                    whereCanIPutAPiece(t: turn)
+
+                    var isPass: Bool = true
+                    for yy in 0...7 {
+                        for xx in 0...7 {
+                            if boardsColorNumber[yy][xx] == PUTTABLE_AREA {
+                                isPass = false
+                                boards[yy][xx].fillColor = COLORS[8]
+                            }
+                        }
+                    }
+                    if isPass {
+                        socket.emit("put", CustomData(id: self.tableID!, x: -1, y: -1, turn: turn))
+                        passTurnButton.isHidden = false
+                        fillColorBoards()
+                        pointsLabel()
+                    } else {
+                        passTurnButton.isHidden = true
+                    }
+                }
+            } else {
+                turn += 1
+                if (turn % playerMaxNumber!) == myTurn {
+                    whereCanIPutAPiece(t: turn)
+                    for yy in 0...7 {
+                        for xx in 0...7 {
+                            if boardsColorNumber[yy][xx] == PUTTABLE_AREA {
+                                boards[yy][xx].fillColor = COLORS[8]
+                            }
                         }
                     }
                 }
             }
+            self.putData = nil
             break
         }
     }

@@ -17,9 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
             if let scene = GameScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFit
                 scene.configure(tableID: self.tableID!, closure: {
                     let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
@@ -31,7 +29,6 @@ class GameViewController: UIViewController {
                         view.presentScene(nil)
                     })
                 })
-                // Present the scene
                 view.presentScene(scene)
             }
             
